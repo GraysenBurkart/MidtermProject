@@ -14,6 +14,7 @@ public class Sprite extends PassiveCreature{
     public void dropFaeDust(){
         if (caught) {
             Player.pouch.add(faeDust);
+            System.out.println("Fae Dust has been added to your pouch.");
         }
     }
 }

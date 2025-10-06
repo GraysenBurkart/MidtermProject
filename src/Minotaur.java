@@ -26,8 +26,12 @@ public class Minotaur extends AggressiveCreature{
         return target.health;
     }
 
+    /**
+     * Adds Minotaur Horn to inventory
+     */
     public void dropHorn(){
         Player.pouch.add(horn);
+        System.out.println("A Minotaur Horn has been added to you pouch.");
     }
 
 }

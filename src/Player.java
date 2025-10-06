@@ -5,6 +5,7 @@ public class Player {
 
     protected String name;
     protected int health;
+    protected String location;
     protected int attackPoints;
     private int dodge;
     public static ArrayList<String> pouch = new ArrayList<String>();
@@ -12,12 +13,14 @@ public class Player {
     Player(String name){
         this.name = name;
         health = 100;
+        location = "Starting Clearing";
         attackPoints = 10;
         dodge = 10;
     }
 
+    // check player stats
     public void sayHi(){
-        System.out.printf("%s has %d health!%n", name, health);
+        System.out.printf("%s has %d health and is in %s.%n", name, health, location);
     }
 
     //getter methods
@@ -67,7 +70,7 @@ public class Player {
     /**
      * if player has fae dust in pouch,
      * can select item to alter play stats and add health
-     * @param item
+     * @param item from pouch
      */
     public void craft(String item){
         if (pouch.contains("Fae Dust")){

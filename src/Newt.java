@@ -15,6 +15,7 @@ public class Newt extends PassiveCreature {
     public void dropEye(){
         if (caught) {
             Player.pouch.add(eye);
+            System.out.println("An Eye of Newt has been added to you pouch.");
         }
     }
 

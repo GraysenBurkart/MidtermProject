@@ -23,8 +23,10 @@ public class Rabbit extends PassiveCreature {
             int footLuck = random.nextInt(1, 2);
             if (footLuck == 1) {
                 Player.pouch.add(rabbitFoot);
+                System.out.println("A Rabbit's Foot has been added to you pouch.");
             } else if (footLuck == 2) {
                 Player.pouch.add(luckyFoot);
+                System.out.println("A Lucky Rabbit's Foot has been added to you pouch.");
             }
         }
     }

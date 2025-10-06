@@ -28,9 +28,14 @@ public class Wyvern extends AggressiveCreature{
         return target.health;
     }
 
+    /**
+     * Adds Wyvern claw and tooth to inventory
+     */
     public void dropItems(){
         Player.pouch.add(claw);
+        System.out.println("A Wyvern Claw has been added to you pouch.");
         Player.pouch.add(tooth);
+        System.out.println("A Wyvern Tooth has been added to you pouch.");
     }
 
 }
