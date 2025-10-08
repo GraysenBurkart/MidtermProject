@@ -6,7 +6,8 @@ public class Player {
 
     protected String name;
     protected int health;
-    protected String location;
+    Room location;
+    boolean move = true;
     protected int attackPoints;
     private int dodge;
     public static ArrayList<String> pouch = new ArrayList<String>();
@@ -14,14 +15,13 @@ public class Player {
     Player(String name){
         this.name = name;
         health = 100;
-        location = "Starting Clearing";
         attackPoints = 10;
         dodge = 10;
     }
 
     // check player stats
     public void sayHi(){
-        System.out.printf("%s has %d health and is in %s.%n", name, health, location);
+        System.out.printf("%s has %d health.%n", name, health);
     }
 
     //getter methods
@@ -39,6 +39,20 @@ public class Player {
 
     public int getAttack(){
         return this.attackPoints;
+    }
+
+    /**
+     *
+     * @param location
+     */
+    Room moveRooms(Room location){
+        Scanner input = new Scanner(System.in);
+        while (move){
+            location.seeRooms(location.connectedRooms);
+            int choice = input.nextInt();
+            location = location.connectedRooms.get(choice);
+        }
+        return location;
     }
 
     /**
