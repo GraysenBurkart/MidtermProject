@@ -7,14 +7,14 @@ public class Player {
     protected String name;
     protected int health;
     Room location;
-    boolean move = true;
     protected int attackPoints;
     private int dodge;
     public static ArrayList<String> pouch = new ArrayList<String>();
 
-    Player(String name){
+    Player(String name, Room location){
         this.name = name;
         health = 100;
+        this.location = location;
         attackPoints = 10;
         dodge = 10;
     }
@@ -47,11 +47,10 @@ public class Player {
      */
     Room moveRooms(Room location){
         Scanner input = new Scanner(System.in);
-        while (move){
-            location.seeRooms(location.connectedRooms);
-            int choice = input.nextInt();
-            location = location.connectedRooms.get(choice);
-        }
+        location.seeRooms(location.connectedRooms);
+        int choice = input.nextInt();
+        location = location.connectedRooms.get(choice - 1);
+
         return location;
     }
 

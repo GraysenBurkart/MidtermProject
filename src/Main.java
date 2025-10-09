@@ -1,7 +1,11 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Random;
 
 public class Main {
+
+  static boolean move;
+
     public static void main(String[] args){
 
         Room startingClearing = new Room("Starting Clearing");
@@ -135,24 +139,163 @@ public class Main {
         ArrayList<Room> connections15 = new ArrayList<Room>();
         connections15.add(forestClearing);
         connections15.add(thickForestPath);
-        acornPath.setRoomContents(connections15);
+        acornPath.setConnectedRooms(connections15);
 
+        // forest clearing contents
+        ArrayList<Creature> forestClearingContents = new ArrayList<>();
+        Wyvern wyvernForest = new Wyvern("Wyvern");
+        forestClearingContents.add(wyvernForest);
+        forestClearing.setRoomContents(forestClearingContents);
 
-        int currentLocation;
+        // meadow clearing contents
+        ArrayList<Creature> meadowClearingContents = new ArrayList<>();
+        Minotaur minotaurMeadow = new Minotaur("Minotaur");
+        meadowClearingContents.add(minotaurMeadow);
+        meadowClearing.setRoomContents(meadowClearingContents);
+
+        // windy clearing contents
+        ArrayList<Creature> windyClearingContents = new ArrayList<>();
+        Minotaur minotaurWindy = new Minotaur("Minotaur");
+        windyClearingContents.add(minotaurWindy);
+        windyClearing.setRoomContents(windyClearingContents);
+
+        // rocky clearing contents
+        ArrayList<Creature> rockyClearingContents = new ArrayList<>();
+        Wyvern wyvernRocky = new Wyvern("Wyvern");
+        rockyClearingContents.add(wyvernRocky);
+        rockyClearing.setRoomContents(rockyClearingContents);
+
+        // forest path contents
+        ArrayList<Creature> forestPathContent = new ArrayList<>();
+        Sprite forestSprite = new Sprite("Sprite");
+        Newt forestNewt = new Newt("Newt");
+        forestPathContent.add(forestSprite);
+        forestPathContent.add(forestNewt);
+        forestPath.setRoomContents(forestPathContent);
+
+        // meadow path contents
+        ArrayList<Creature> meadowPathContents = new ArrayList<>();
+        Sprite meadowSprite = new Sprite("Sprite");
+        meadowPathContents.add(meadowSprite);
+        Rabbit meadowRabbit = new Rabbit("Rabbit");
+        meadowPathContents.add(meadowRabbit);
+        meadowPath.setRoomContents(meadowPathContents);
+
+        // bendy path contents
+        ArrayList<Creature> bendyPathContents = new ArrayList<>();
+        Newt bendyNewt = new Newt("Newt");
+        bendyPathContents.add(bendyNewt);
+        Sprite bendySprite = new Sprite("Sprite");
+        bendyPathContents.add(bendySprite);
+        bendyPath.setRoomContents(bendyPathContents);
+
+        // rocky path contents
+        ArrayList<Creature> rockyPathContents = new ArrayList<>();
+        Sprite rockySprite = new Sprite("Sprite");
+        rockyPathContents.add(rockySprite);
+        Newt rockyNewt = new Newt("Newt");
+        rockyPathContents.add(rockyNewt);
+        rockyPath.setRoomContents(rockyPathContents);
+
+        // windy path contents
+        ArrayList<Creature> windyPathContents = new ArrayList<>();
+        Sprite windySprite = new Sprite("Sprite");
+        windyPathContents.add(windySprite);
+        windyPath.setRoomContents(windyPathContents);
+
+        // flower path contents
+        ArrayList<Creature> flowerPathContents = new ArrayList<>();
+        Sprite flowerSprite =new Sprite("Sprite");
+        flowerPathContents.add(flowerSprite);
+        Rabbit flowerRabbit = new Rabbit("Rabbit");
+        flowerPathContents.add(flowerRabbit);
+        flowerPath.setRoomContents(flowerPathContents);
+
+        // acorn path contents
+        ArrayList<Creature> acornPathContents = new ArrayList<>();
+        Sprite acornSprite = new Sprite("Sprite");
+        acornPathContents.add(acornSprite);
+        Rabbit acornRabbit = new Rabbit("Rabbit");
+        acornPathContents.add(acornRabbit);
+        acornPath.setRoomContents(acornPathContents);
+
         Scanner userInput = new Scanner(System.in);
         System.out.println("Hello adventurer! What is your name?");
         String userName = userInput.nextLine();
 
-        Player player = new Player(userName);
+        Player player = new Player(userName, startingClearing);
         player.sayHi();
+
+        System.out.println("To look in you pouch press I");
+        System.out.println("To check your health press H");
+        System.out.println("To attack press A");
+        System.out.println("To dodge press D");
+        System.out.println("To catch a creature press C");
+        System.out.println("To move forward on your path press M");
         System.out.printf("Please use the numbers on your keyboard to choose your path.%n%n");
 
-       // startingClearing.moveRooms();
-
-        player.location = startingClearing;
 
         while (player.health > 0){
-            player.moveRooms(player.location);
+
+            startingClearing.getDescription();
+            System.out.println("What would you like to do?");
+            String choice = userInput.nextLine();
+
+            if (choice.equalsIgnoreCase("m")){
+                player.moveRooms(player.location);
+            } else if (choice.equalsIgnoreCase("i")) {
+                player.viewInventory();
+            } else if (choice.equalsIgnoreCase("h")){
+                player.sayHi();
+            } else if (choice.equalsIgnoreCase("a")){
+                // initiates attack on aggressive creature based on player location
+                // makes a roll to determine type of attack
+                if (player.location == forestClearing){
+                    while(player.health > 0 || wyvernForest.health > 0) {
+                        player.attack(wyvernForest);
+                        Random random = new Random();
+                        int attackType = random.nextInt(1, 2);
+                        if (attackType == 1) {
+                            wyvernForest.attack(player);
+                        } else if (attackType == 2){
+                            wyvernForest.specialQuickAttack(player);
+                        }
+                    }
+                }else if (player.location == rockyClearing){
+                    while(player.health > 0 || wyvernRocky.health > 0) {
+                        player.attack(wyvernRocky);
+                        Random random = new Random();
+                        int attackType = random.nextInt(1, 2);
+                        if (attackType == 1) {
+                            wyvernRocky.attack(player);
+                        } else if (attackType == 2){
+                            wyvernRocky.specialQuickAttack(player);
+                        }
+                    }
+                } else if (player.location == meadowClearing){
+                    while(player.health > 0 || minotaurMeadow.health > 0) {
+                        player.attack(minotaurMeadow);
+                        Random random = new Random();
+                        int attackType = random.nextInt(1, 2);
+                        if (attackType == 1) {
+                            minotaurMeadow.attack(player);
+                        } else if (attackType == 2){
+                            minotaurMeadow.specialHeavyAttack(player);
+                        }
+                    }
+                } else if (player.location == windyClearing){
+                    while(player.health > 0 || minotaurWindy.health > 0) {
+                        player.attack(minotaurWindy);
+                        Random random = new Random();
+                        int attackType = random.nextInt(1, 2);
+                        if (attackType == 1) {
+                            minotaurWindy.attack(player);
+                        } else if (attackType == 2){
+                            minotaurWindy.specialHeavyAttack(player);
+                        }
+                    }
+                }
+            }
 
         }
 
